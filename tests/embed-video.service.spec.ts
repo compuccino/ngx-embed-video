@@ -30,11 +30,19 @@ describe('EmbedVideoService', () => {
       )
     }));
 
-  it('converts facebook url',
+  it('converts facebook url with ?v param',
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
 
       expect(embedVideoService.embed('https://www.facebook.com/watch/?v=1545802115475031')).toEqual(
         sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031"></iframe>')
+      )
+    }));
+
+  it('converts facebook url with normal videos path',
+    inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
+
+      expect(embedVideoService.embed('https://www.facebook.com/MercedesBenz/videos/10155716373856670/')).toEqual(
+        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F10155716373856670"></iframe>')
       )
     }));
 
