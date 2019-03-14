@@ -1,7 +1,10 @@
 # Node
-node_modules/*
+
+### can be ignored when package is deployed to npm
+# node_modules/*
+# dist
 npm-debug.log
-dist
+node_modules
 
 # JetBrains
 .idea
