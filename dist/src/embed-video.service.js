@@ -81,6 +81,7 @@ var EmbedVideoService = /** @class */ (function () {
             }
             options.attr = __assign({}, options.attr, { style: "border:none;overflow:hidden;" + styles, scrolling: 'no', frameborder: '0', allowTransparency: true, allow: 'encrypted-media', allowFullScreen: true });
             options.query = __assign({}, options.query, { show_text: false });
+            options.facebook = true;
         }
         options = this.parseOptions(options);
         return this.sanitize_iframe('<iframe src="' + fbBaseUrl
@@ -170,6 +171,14 @@ var EmbedVideoService = /** @class */ (function () {
     EmbedVideoService.prototype.parseOptions = function (options) {
         var queryString = '', attributes = '';
         if (options && options.hasOwnProperty('query')) {
+            if (!options.hasOwnProperty('facebook')) {
+                if (options.query.width) {
+                    delete options.query.width;
+                }
+                if (options.query.height) {
+                    delete options.query.height;
+                }
+            }
             queryString = '?' + this.serializeQuery(options.query);
         }
         if (options && options.hasOwnProperty('attr')) {
