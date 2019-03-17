@@ -135,6 +135,14 @@ describe('EmbedVideoService', () => {
       )
     }));
 
+  it('removes height and width query params youtube',
+    inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
+
+      expect(embedVideoService.embed_youtube('9XeNNqeHVDw', { query: { rel: 0, showinfo: 0, width: 500, height: 500 }, attr: { width: 400, height: 200 } })).toEqual(
+        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.youtube.com/embed/9XeNNqeHVDw?rel=0&showinfo=0" width="400" height="200" frameborder="0" allowfullscreen></iframe>')
+      )
+    }))
+
   it('accepts attributes youtube',
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
 
@@ -143,10 +151,19 @@ describe('EmbedVideoService', () => {
       )
     }));
 
+
   it('accepts query param vimeo',
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
 
       expect(embedVideoService.embed_vimeo('19339941', { query: { portrait: 0, color: '333' } })).toEqual(
+        sanitizer.bypassSecurityTrustHtml('<iframe src="https://player.vimeo.com/video/19339941?portrait=0&color=333" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>')
+      )
+    }));
+
+  it('removes height and width query params vimeo',
+    inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
+
+      expect(embedVideoService.embed_vimeo('19339941', { query: { portrait: 0, color: '333', width: 500, height: 500 } })).toEqual(
         sanitizer.bypassSecurityTrustHtml('<iframe src="https://player.vimeo.com/video/19339941?portrait=0&color=333" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>')
       )
     }));
@@ -163,6 +180,14 @@ describe('EmbedVideoService', () => {
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
 
       expect(embedVideoService.embed_dailymotion('x20qnej', { query: { autoPlay: 1, start: 66 } })).toEqual(
+        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.dailymotion.com/embed/video/x20qnej?autoPlay=1&start=66" frameborder="0" allowfullscreen></iframe>')
+      )
+    }));
+
+  it('removes height and width query params dailymotion',
+    inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
+
+      expect(embedVideoService.embed_dailymotion('x20qnej', { query: { autoPlay: 1, start: 66, height: 500, width: 500 } })).toEqual(
         sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.dailymotion.com/embed/video/x20qnej?autoPlay=1&start=66" frameborder="0" allowfullscreen></iframe>')
       )
     }));

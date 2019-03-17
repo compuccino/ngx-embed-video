@@ -81,6 +81,8 @@ export class EmbedVideoService {
         ...options.query,
         show_text: false,
       }
+
+      options.facebook = true;
     }
 
 
@@ -199,6 +201,14 @@ export class EmbedVideoService {
       attributes = '';
 
     if (options && options.hasOwnProperty('query')) {
+      if (!options.hasOwnProperty('facebook')) {
+        if (options.query.width) {
+          delete options.query.width;
+        }
+        if (options.query.height) {
+          delete options.query.height;
+        }
+      }
       queryString = '?' + this.serializeQuery(options.query);
     }
 
