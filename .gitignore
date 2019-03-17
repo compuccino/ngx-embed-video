@@ -1,7 +1,9 @@
 # Node
-node_modules/*
-npm-debug.log
-dist
+### can be ignored (added back to this file) when package is deployed to npm
+# node_modules/*
+# dist
+
+node_modules
 
 # JetBrains
 .idea
