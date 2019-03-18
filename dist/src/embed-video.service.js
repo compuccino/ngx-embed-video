@@ -214,7 +214,7 @@ var EmbedVideoService = /** @class */ (function () {
                 return url.href.split('?v=').pop().replace('/', '');
             }
             else {
-                return url.href.split('videos/')[1].replace('/', '');
+                return url.href.match(/(\d+)\/?$/)[1];
             }
         }
         return '';

@@ -252,7 +252,7 @@ export class EmbedVideoService {
       if (url.href.indexOf('?v=') > -1) {
         return url.href.split('?v=').pop().replace('/', '');
       } else {
-        return url.href.split('videos/')[1].replace('/', '');
+        return url.href.match(/(\d+)\/?$/)[1];
       }
     }
     return '';
