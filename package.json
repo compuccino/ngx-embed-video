@@ -75,6 +75,7 @@
   },
   "dependencies": {
     "@angular-devkit/schematics": "7.3.5",
-    "@angular/animations": "7.2.9"
+    "@angular/animations": "7.2.9",
+    "url-polyfill": "^1.1.5"
   }
 }
