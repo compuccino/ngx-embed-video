@@ -18,6 +18,9 @@
       "node_modules/@types"
     ]
   },
+  "include": [
+    "./polyfills.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
