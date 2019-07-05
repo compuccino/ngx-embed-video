@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 
-
 @Injectable()
 export class EmbedVideoService {
   private validYouTubeOptions = [
@@ -29,11 +28,7 @@ export class EmbedVideoService {
     'thumbnail_1080_url'
   ];
 
-  constructor(
-    private http: HttpClient,
-    private sanitizer: DomSanitizer
-  ) {
-  }
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
   public embed(url: any, options?: any): any {
     let id;
@@ -61,7 +56,8 @@ export class EmbedVideoService {
   }
 
   public embed_facebook(id: string, options?: any): string {
-    const fbBaseUrl = 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F';
+    const fbBaseUrl =
+      'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F';
     let styles = '';
     if (options) {
       if (options.attr) {
@@ -76,45 +72,65 @@ export class EmbedVideoService {
         allowTransparency: true,
         allow: 'encrypted-media',
         allowFullScreen: true
-      }
+      };
 
       options.query = {
         ...options.query,
-        show_text: false,
-      }
+        show_text: false
+      };
 
       options.facebook = true;
     }
 
-
     options = this.parseOptions(options);
-    return this.sanitize_iframe('<iframe src="' + fbBaseUrl
-      + id + options.query + '"' + options.attr
-      + '></iframe>');
+    return this.sanitize_iframe(
+      '<iframe src="' +
+        fbBaseUrl +
+        id +
+        options.query +
+        '"' +
+        options.attr +
+        '></iframe>'
+    );
   }
 
   public embed_youtube(id: string, options?: any): string {
     options = this.parseOptions(options);
 
-    return this.sanitize_iframe('<iframe src="https://www.youtube.com/embed/'
-      + id + options.query + '"' + options.attr
-      + ' frameborder="0" allowfullscreen></iframe>');
+    return this.sanitize_iframe(
+      '<iframe src="https://www.youtube.com/embed/' +
+        id +
+        options.query +
+        '"' +
+        options.attr +
+        ' frameborder="0" allowfullscreen></iframe>'
+    );
   }
 
   public embed_vimeo(id: string, options?: any): string {
     options = this.parseOptions(options);
 
-    return this.sanitize_iframe('<iframe src="https://player.vimeo.com/video/'
-      + id + options.query + '"' + options.attr
-      + ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+    return this.sanitize_iframe(
+      '<iframe src="https://player.vimeo.com/video/' +
+        id +
+        options.query +
+        '"' +
+        options.attr +
+        ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+    );
   }
 
   public embed_dailymotion(id: string, options?: any): string {
     options = this.parseOptions(options);
 
-    return this.sanitize_iframe('<iframe src="https://www.dailymotion.com/embed/video/'
-      + id + options.query + '"' + options.attr
-      + ' frameborder="0" allowfullscreen></iframe>');
+    return this.sanitize_iframe(
+      '<iframe src="https://www.dailymotion.com/embed/video/' +
+        id +
+        options.query +
+        '"' +
+        options.attr +
+        ' frameborder="0" allowfullscreen></iframe>'
+    );
   }
 
   public embed_image(url: any, options?: any): any {
@@ -144,7 +160,10 @@ export class EmbedVideoService {
     }
     options = options || {};
 
-    options.image = this.validYouTubeOptions.indexOf(options.image) > 0 ? options.image : 'default';
+    options.image =
+      this.validYouTubeOptions.indexOf(options.image) > 0
+        ? options.image
+        : 'default';
 
     let src = 'https://img.youtube.com/vi/' + id + '/' + options.image + '.jpg';
 
@@ -153,7 +172,7 @@ export class EmbedVideoService {
       html: '<img src="' + src + '"/>'
     };
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       resolve(result);
     });
   }
@@ -165,14 +184,21 @@ export class EmbedVideoService {
 
     options = options || {};
 
-    options.image = this.validVimeoOptions.indexOf(options.image) >= 0 ? options.image : 'thumbnail_large';
+    options.image =
+      this.validVimeoOptions.indexOf(options.image) >= 0
+        ? options.image
+        : 'thumbnail_large';
 
-    return this.http.get('https://vimeo.com/api/v2/video/' + id + '.json').pipe(map((res: any) => {
-      return {
-        'link': res[0][options.image],
-        'html': '<img src="' + res[0][options.image] + '"/>'
-      };
-    }))
+    return this.http
+      .get('https://vimeo.com/api/v2/video/' + id + '.json')
+      .pipe(
+        map((res: any) => {
+          return {
+            link: res[0][options.image],
+            html: '<img src="' + res[0][options.image] + '"/>'
+          };
+        })
+      )
       .toPromise()
       .catch(error => console.log(error));
   }
@@ -184,15 +210,23 @@ export class EmbedVideoService {
 
     options = options || {};
 
-    options.image = this.validDailyMotionOptions.indexOf(options.image) >= 0 ? options.image : 'thumbnail_480_url';
+    options.image =
+      this.validDailyMotionOptions.indexOf(options.image) >= 0
+        ? options.image
+        : 'thumbnail_480_url';
 
-    return this.http.get('https://api.dailymotion.com/video/' + id + '?fields=' + options.image)
-      .pipe(map((res: any) => {
-        return {
-          'link': res[options.image],
-          'html': '<img src="' + res[options.image] + '"/>'
-        };
-      }))
+    return this.http
+      .get(
+        'https://api.dailymotion.com/video/' + id + '?fields=' + options.image
+      )
+      .pipe(
+        map((res: any) => {
+          return {
+            link: res[options.image],
+            html: '<img src="' + res[options.image] + '"/>'
+          };
+        })
+      )
       .toPromise()
       .catch(error => console.log(error));
   }
@@ -216,8 +250,8 @@ export class EmbedVideoService {
     if (options && options.hasOwnProperty('attr')) {
       let temp = <any>[];
 
-      Object.keys(options.attr).forEach(function (key) {
-        temp.push(key + '="' + (options.attr[key]) + '"');
+      Object.keys(options.attr).forEach(function(key) {
+        temp.push(key + '="' + options.attr[key] + '"');
       });
 
       attributes = ' ' + temp.join(' ');
@@ -233,7 +267,9 @@ export class EmbedVideoService {
 
     for (let p in query) {
       if (query.hasOwnProperty(p)) {
-        queryString.push(encodeURIComponent(p) + '=' + encodeURIComponent(query[p]));
+        queryString.push(
+          encodeURIComponent(p) + '=' + encodeURIComponent(query[p])
+        );
       }
     }
 
@@ -245,13 +281,16 @@ export class EmbedVideoService {
   }
 
   private detectVimeo(url: any): string {
-    return (url.hostname === 'vimeo.com') ? url.pathname.split('/')[1] : null;
+    return url.hostname === 'vimeo.com' ? url.pathname.split('/')[1] : null;
   }
 
   private detectFacebook(url: any): string {
     if (url.hostname.indexOf('facebook.com') > -1 && url.href) {
       if (url.href.indexOf('?v=') > -1) {
-        return url.href.split('?v=').pop().replace('/', '');
+        return url.href
+          .split('?v=')
+          .pop()
+          .replace('/', '');
       } else {
         return url.href.match(/(\d+)\/?$/)[1];
       }

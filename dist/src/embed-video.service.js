@@ -24,7 +24,6 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var platform_browser_1 = require("@angular/platform-browser");
 var operators_1 = require("rxjs/operators");
-require("url-polyfill");
 var EmbedVideoService = /** @class */ (function () {
     function EmbedVideoService(http, sanitizer) {
         this.http = http;
@@ -85,27 +84,40 @@ var EmbedVideoService = /** @class */ (function () {
             options.facebook = true;
         }
         options = this.parseOptions(options);
-        return this.sanitize_iframe('<iframe src="' + fbBaseUrl
-            + id + options.query + '"' + options.attr
-            + '></iframe>');
+        return this.sanitize_iframe('<iframe src="' +
+            fbBaseUrl +
+            id +
+            options.query +
+            '"' +
+            options.attr +
+            '></iframe>');
     };
     EmbedVideoService.prototype.embed_youtube = function (id, options) {
         options = this.parseOptions(options);
-        return this.sanitize_iframe('<iframe src="https://www.youtube.com/embed/'
-            + id + options.query + '"' + options.attr
-            + ' frameborder="0" allowfullscreen></iframe>');
+        return this.sanitize_iframe('<iframe src="https://www.youtube.com/embed/' +
+            id +
+            options.query +
+            '"' +
+            options.attr +
+            ' frameborder="0" allowfullscreen></iframe>');
     };
     EmbedVideoService.prototype.embed_vimeo = function (id, options) {
         options = this.parseOptions(options);
-        return this.sanitize_iframe('<iframe src="https://player.vimeo.com/video/'
-            + id + options.query + '"' + options.attr
-            + ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+        return this.sanitize_iframe('<iframe src="https://player.vimeo.com/video/' +
+            id +
+            options.query +
+            '"' +
+            options.attr +
+            ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
     };
     EmbedVideoService.prototype.embed_dailymotion = function (id, options) {
         options = this.parseOptions(options);
-        return this.sanitize_iframe('<iframe src="https://www.dailymotion.com/embed/video/'
-            + id + options.query + '"' + options.attr
-            + ' frameborder="0" allowfullscreen></iframe>');
+        return this.sanitize_iframe('<iframe src="https://www.dailymotion.com/embed/video/' +
+            id +
+            options.query +
+            '"' +
+            options.attr +
+            ' frameborder="0" allowfullscreen></iframe>');
     };
     EmbedVideoService.prototype.embed_image = function (url, options) {
         var id;
@@ -128,7 +140,10 @@ var EmbedVideoService = /** @class */ (function () {
             options = {};
         }
         options = options || {};
-        options.image = this.validYouTubeOptions.indexOf(options.image) > 0 ? options.image : 'default';
+        options.image =
+            this.validYouTubeOptions.indexOf(options.image) > 0
+                ? options.image
+                : 'default';
         var src = 'https://img.youtube.com/vi/' + id + '/' + options.image + '.jpg';
         var result = {
             link: src,
@@ -143,11 +158,16 @@ var EmbedVideoService = /** @class */ (function () {
             options = {};
         }
         options = options || {};
-        options.image = this.validVimeoOptions.indexOf(options.image) >= 0 ? options.image : 'thumbnail_large';
-        return this.http.get('https://vimeo.com/api/v2/video/' + id + '.json').pipe(operators_1.map(function (res) {
+        options.image =
+            this.validVimeoOptions.indexOf(options.image) >= 0
+                ? options.image
+                : 'thumbnail_large';
+        return this.http
+            .get('https://vimeo.com/api/v2/video/' + id + '.json')
+            .pipe(operators_1.map(function (res) {
             return {
-                'link': res[0][options.image],
-                'html': '<img src="' + res[0][options.image] + '"/>'
+                link: res[0][options.image],
+                html: '<img src="' + res[0][options.image] + '"/>'
             };
         }))
             .toPromise()
@@ -158,12 +178,16 @@ var EmbedVideoService = /** @class */ (function () {
             options = {};
         }
         options = options || {};
-        options.image = this.validDailyMotionOptions.indexOf(options.image) >= 0 ? options.image : 'thumbnail_480_url';
-        return this.http.get('https://api.dailymotion.com/video/' + id + '?fields=' + options.image)
+        options.image =
+            this.validDailyMotionOptions.indexOf(options.image) >= 0
+                ? options.image
+                : 'thumbnail_480_url';
+        return this.http
+            .get('https://api.dailymotion.com/video/' + id + '?fields=' + options.image)
             .pipe(operators_1.map(function (res) {
             return {
-                'link': res[options.image],
-                'html': '<img src="' + res[options.image] + '"/>'
+                link: res[options.image],
+                html: '<img src="' + res[options.image] + '"/>'
             };
         }))
             .toPromise()
@@ -185,7 +209,7 @@ var EmbedVideoService = /** @class */ (function () {
         if (options && options.hasOwnProperty('attr')) {
             var temp_1 = [];
             Object.keys(options.attr).forEach(function (key) {
-                temp_1.push(key + '="' + (options.attr[key]) + '"');
+                temp_1.push(key + '="' + options.attr[key] + '"');
             });
             attributes = ' ' + temp_1.join(' ');
         }
@@ -207,12 +231,15 @@ var EmbedVideoService = /** @class */ (function () {
         return this.sanitizer.bypassSecurityTrustHtml(iframe);
     };
     EmbedVideoService.prototype.detectVimeo = function (url) {
-        return (url.hostname === 'vimeo.com') ? url.pathname.split('/')[1] : null;
+        return url.hostname === 'vimeo.com' ? url.pathname.split('/')[1] : null;
     };
     EmbedVideoService.prototype.detectFacebook = function (url) {
         if (url.hostname.indexOf('facebook.com') > -1 && url.href) {
             if (url.href.indexOf('?v=') > -1) {
-                return url.href.split('?v=').pop().replace('/', '');
+                return url.href
+                    .split('?v=')
+                    .pop()
+                    .replace('/', '');
             }
             else {
                 return url.href.match(/(\d+)\/?$/)[1];
@@ -240,8 +267,7 @@ var EmbedVideoService = /** @class */ (function () {
     };
     EmbedVideoService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient,
-            platform_browser_1.DomSanitizer])
+        __metadata("design:paramtypes", [http_1.HttpClient, platform_browser_1.DomSanitizer])
     ], EmbedVideoService);
     return EmbedVideoService;
 }());

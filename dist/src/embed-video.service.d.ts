@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import 'url-polyfill';
 export declare class EmbedVideoService {
     private http;
     private sanitizer;

@@ -2,11 +2,9 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "module": "commonjs",
+    "moduleResolution": "node",
     "target": "es5",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowUnusedLabels": false,
@@ -14,18 +12,9 @@
     "sourceMap": true,
     "declaration": true,
     "outDir": "./dist",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": [
-    "./polyfills.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.spec.ts"
-  ],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"],
   "angularCompilerOptions": {
     "strictMetadataEmit": true
   }
