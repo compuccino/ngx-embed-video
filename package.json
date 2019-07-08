@@ -40,7 +40,8 @@
   "main": "./dist/index.js",
   "peerDependencies": {
     "@angular/core": "^7.0.0 || ^8.0.0",
-    "@angular/common": "^7.0.0 || ^8.0.0"
+    "@angular/common": "^7.0.0 || ^8.0.0",
+    "url-polyfill": "^1.1.5"
   },
   "devDependencies": {
     "@angular/common": "7.2.9",

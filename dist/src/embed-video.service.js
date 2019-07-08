@@ -24,7 +24,6 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var platform_browser_1 = require("@angular/platform-browser");
 var operators_1 = require("rxjs/operators");
-require("url-polyfill");
 var EmbedVideoService = /** @class */ (function () {
     function EmbedVideoService(http, sanitizer) {
         this.http = http;
