@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
-// https://stackoverflow.com/questions/43037590/field-browser-doesnt-contain-a-valid-alias-configuration
-import './url-polyfill';
+import 'url-polyfill';
+
 
 @Injectable()
 export class EmbedVideoService {
