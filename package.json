@@ -68,13 +68,13 @@
     "tslint": "5.14.0",
     "typescript": "3.2.4",
     "webpack": "4.29.6",
-    "zone.js": "0.8.29"
+    "zone.js": "0.8.29",
+    "@angular-devkit/schematics": "7.3.5"
   },
   "engines": {
     "node": ">=0.8.0"
   },
   "dependencies": {
-    "@angular-devkit/schematics": "7.3.5",
     "@angular/animations": "7.2.9"
   }
 }
