@@ -114,38 +114,18 @@ describe('EmbedVideoService', () => {
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
 
       expect(embedVideoService.embed_facebook('1545802115475031', { query: { rel: 0, showinfo: 0 } })).toEqual(
-        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031?rel=0&showinfo=0&show_text=false" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>')
+        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031?rel=0&showinfo=0&show_text=false" style="border:none;overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>')
       )
     }));
 
   it('accepts attributes facebook',
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
 
-      expect(embedVideoService.embed_facebook('1545802115475031', { query: { rel: 0, showinfo: 0 }, attr: { allow: 'autoplay; encrypted-media' } })).toEqual(
-        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031?rel=0&showinfo=0&show_text=false" allow="encrypted-media" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>')
+      expect(embedVideoService.embed_facebook('1545802115475031', { query: { rel: 0, showinfo: 0, width: 500, height: 280 }, attr: { allow: 'autoplay; encrypted-media' } })).toEqual(
+        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031?rel=0&showinfo=0&width=500&height=280&show_text=false" allow="encrypted-media" style="border:none;overflow:hidden;" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>')
       )
     }));
 
-  it('applies width and height via facebook object',
-    inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
-
-      expect(embedVideoService.embed_facebook('1545802115475031', { query: { rel: 0, showinfo: 0 }, attr: { allow: 'autoplay; encrypted-media' }, facebook: { width: 500, height: 280 } })).toEqual(
-        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031?rel=0&showinfo=0&show_text=false&width=500&height=280" allow="encrypted-media" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true" width="500" height="280"></iframe>')
-      )
-    }));
-
-  it('rejects width and height attributes for facebook, and provides instructions on how to provide facebook width and height attributes as a console error message',
-    inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
-      spyOn(console, 'error');
-
-      embedVideoService.embed_facebook('1545802115475031', { query: { rel: 0, showinfo: 0 }, attr: { width: 400, height: 200 } });
-      expect(console.error).toHaveBeenCalledWith('FACEBOOK ERROR: Width/height MUST BE specified in a facebook object: e.g. facebook: { width: 500, height: 280 }');
-
-      // removes any existing width and height attributes
-      expect(embedVideoService.embed_facebook('1545802115475031', { query: { rel: 0, showinfo: 0 } })).toEqual(
-        sanitizer.bypassSecurityTrustHtml('<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook%2Fvideos%2F1545802115475031?rel=0&showinfo=0&show_text=false" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>')
-      )
-    }));
 
   it('accepts query param youtube',
     inject([EmbedVideoService, DomSanitizer], (embedVideoService, sanitizer) => {
